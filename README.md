@@ -1,5 +1,5 @@
 # rss_reader_challenge
-프로그래머스 마이리얼트립 Kotlin 챌린지
+프로그래머스 마이리얼트립 Kotlin 앱 챌린지
 
 ## 개발 정보
 - 언어 : Kotlin
