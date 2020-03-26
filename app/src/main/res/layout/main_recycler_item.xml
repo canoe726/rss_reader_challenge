@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/constraintLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/itemImageView"
+            android:layout_width="220dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="fitXY"
+            android:background="@drawable/thumbnail_frame"
+            android:padding="2dp"
+            app:srcCompat="@drawable/ic_image_black_24dp"
+            android:contentDescription="@string/recyclerView_newsImage" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraintLayout2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <TextView
+                    android:id="@+id/itemTitleTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textColor="@color/colorDarkGrey"
+                    android:textSize="15sp"
+                    android:text="갤럭시S 신제품은 '갤럭시S20'... 실물 사진 유출 ..."
+                    android:fontFamily="@font/nanum_square_round_eb"/>
+
+                <TextView
+                    android:id="@+id/itemContentTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:textSize="12sp"
+                    android:ellipsize="end"
+                    android:maxLines="3"
+                    android:lineSpacingExtra="3sp"
+                    android:textColor="@color/colorNormalGrey"
+                    android:text="삼성전자가 다음 달 공개할 예정인 차기 갤럭시 S시리즈중 한 모델로 추정되는 사진(사진)이 유출됬다..."
+                    android:fontFamily="@font/nanum_square_round_r"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@+id/constraintLayout2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:weightSum="3">
+
+                <TextView
+                    android:id="@+id/itemKeyword1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/button_frame"
+                    android:paddingLeft="9dp"
+                    android:paddingTop="2dp"
+                    android:paddingRight="9dp"
+                    android:paddingBottom="2dp"
+                    android:text="갤럭시S20"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textSize="13sp"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorNormalGrey"
+                    android:fontFamily="@font/nanum_square_round_b"/>
+
+                <TextView
+                    android:id="@+id/itemKeyword2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/button_frame"
+                    android:paddingLeft="9dp"
+                    android:paddingTop="2dp"
+                    android:paddingRight="9dp"
+                    android:paddingBottom="2dp"
+                    android:text="모델로"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textSize="13sp"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorNormalGrey"
+                    android:fontFamily="@font/nanum_square_round_b" />
+
+                <TextView
+                    android:id="@+id/itemKeyword3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/button_frame"
+                    android:paddingLeft="9dp"
+                    android:paddingTop="2dp"
+                    android:paddingRight="9dp"
+                    android:paddingBottom="2dp"
+                    android:text="카메라"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:textSize="13sp"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorNormalGrey"
+                    android:fontFamily="@font/nanum_square_round_b" />
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

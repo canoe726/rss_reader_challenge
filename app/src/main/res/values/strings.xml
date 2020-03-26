@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">RSS 뉴스 리더</string>
+    <string name="splash_content">최신 뉴스를 제공합니다.\n 뉴스의 키워드를 알아보세요</string>
+    <string name="splash_version">v 1.0</string>
+    <string name="recyclerView_newsImage">RecyclerView 뉴스 이미지</string>
+    <string name="spalsh_logoImage">스플래시 로고 이미지</string>
+    <string name="spalsh_leftImage">스플래시 좌 작은 이미지</string>
+    <string name="spalsh_rightImage">스플래시 우 작은 이미지</string>
+</resources>
