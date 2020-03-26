@@ -10,31 +10,29 @@
 
 ## 앱 화면 스크린샷
 <div>
-<p>뉴스 본문 로딩 화면</p>
-<img width="200" src="https://user-images.githubusercontent.com/36183001/77622429-9afda580-6f81-11ea-897b-a96cdb88880d.jpg">
-  &nbsp;&nbsp;
-  
-<p>뉴스 본문 화면</p>
-<img width="200" src="https://user-images.githubusercontent.com/36183001/77622617-f2037a80-6f81-11ea-937b-043035ee7580.jpg">
-  &nbsp;&nbsp;
-  
-<p>메인 뉴스 로딩 화면</p>
-<img width="200" src="https://user-images.githubusercontent.com/36183001/77622637-f891f200-6f81-11ea-9663-4ccd80d11f64.jpg">
-  &nbsp;&nbsp;
-  
-<p>메인 뉴스 화면</p>
-<img width="200" src="https://user-images.githubusercontent.com/36183001/77622645-faf44c00-6f81-11ea-9291-ffe156989763.jpg">
-  &nbsp;&nbsp;
-  
-<p>스플래시 화면</p>
 <img width="200" src="https://user-images.githubusercontent.com/36183001/77622647-fb8ce280-6f81-11ea-9e2d-f81731dafaa0.jpg">
   &nbsp;&nbsp;
-  
-<p>이미지 로딩 중 화면</p>
 <img width="200" src="https://user-images.githubusercontent.com/36183001/77622649-fc257900-6f81-11ea-85aa-d6453537f3e0.jpg">
+  &nbsp;&nbsp;
+<img width="200" src="https://user-images.githubusercontent.com/36183001/77622637-f891f200-6f81-11ea-9663-4ccd80d11f64.jpg">
+  &nbsp;&nbsp;
+<img width="200" src="https://user-images.githubusercontent.com/36183001/77622645-faf44c00-6f81-11ea-9291-ffe156989763.jpg">
+  &nbsp;&nbsp;
+<img width="200" src="https://user-images.githubusercontent.com/36183001/77622429-9afda580-6f81-11ea-897b-a96cdb88880d.jpg">
+  &nbsp;&nbsp;
+<img width="200" src="https://user-images.githubusercontent.com/36183001/77622617-f2037a80-6f81-11ea-937b-043035ee7580.jpg">
   &nbsp;&nbsp;
 </div>
 <br>
+
+## 이미지 설명
+- 순서 : 왼쪽 위부터 차례로
+1) 스플래시 화면
+2) 이미지 로딩 중 화면
+3) 메인 뉴스 로딩 화면
+4) 메인 뉴스 화면
+5) 뉴스 본문 로딩 화면
+6) 뉴스 본문 화면
 
 ## 기능 설명
 ### 스플래시 화면
