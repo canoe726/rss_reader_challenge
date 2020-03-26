@@ -39,7 +39,8 @@
 - 앱 실행시 스플래시 화면이 보여짐
 - 1.3초 후에 뉴스 리스트 화면으로 이동
 
-### 메인 화면 (구글 한글 뉴스 링크 소스를 사용함 : https://news.google.com/rss?hl=ko&gl=KR&ceid=KR:ko)
+### 메인 화면
+* (구글 한글 뉴스 링크 소스를 사용함 : https://news.google.com/rss?hl=ko&gl=KR&ceid=KR:ko) *
 - 뉴스 항목(item) 클릭 시 뉴스 상세보기 화면으로 이동
 - 리스트를 당겨서 새로고침 가능
 - 키워드 추출 방법 :
