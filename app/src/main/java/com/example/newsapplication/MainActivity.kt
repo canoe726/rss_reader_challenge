@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jsoup.Connection
+import org.jsoup.HttpStatusException
 import org.jsoup.Jsoup
 import org.jsoup.nodes.Document
 import org.xml.sax.InputSource
@@ -28,6 +29,8 @@ import javax.xml.parsers.SAXParser
 import javax.xml.parsers.SAXParserFactory
 
 // HTML 태그를 쉽게 가져오기 위해 Jsoup 라이브러리 사용 -> 링크 : https://jsoup.org/download [implementation 'org.jsoup:jsoup:1.13.1']
+
+private const val USER_AGENT = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.152 Safari/537.36"
 
 class MainActivity : AppCompatActivity() {
     private val newsURL = "https://news.google.com/rss?hl=ko&gl=KR&ceid=KR:ko"      // Google News Rss 한국어 링크
@@ -163,64 +166,80 @@ class MainActivity : AppCompatActivity() {
         override fun doInBackground(vararg urls: Pair<String, Int>): Void? {
             try {
                 if(activity != null) {
-                    newsIdx = urls[0].second
+                    try {
+                        newsIdx = urls[0].second
 
-                    val connect: Connection = Jsoup.connect(urls[0].first)      // HTML 태그인 meta property 를 쉽게 가져오기 위해 Jsoup 사용
-                    val document: Document = connect.get()
+                        val connect: Connection = Jsoup.connect(urls[0].first)      // HTML 태그인 meta property 를 쉽게 가져오기 위해 Jsoup 사용
+                            .timeout(1000 * 10)      // 10 초 동안 웹 정보를 받아옴
+                            .ignoreHttpErrors(true)
+                            .header("Content-Type", "application/json;charset=UTF-8")       // bot 이 아닌 client 로 인식 하게 하기 위함
+                            .userAgent(USER_AGENT)                                                       //
+                            .ignoreContentType(true)                                    //
+                            .method(Connection.Method.GET)
+                            .referrer("http://www.google.com")      // HTTP header field that identifies the address of the webpage
 
-                    val metaOgImage = document.select("meta[property=og:image]")
-                    val metaOgDesc = document.select("meta[property=og:description]")
+                        val document: Document = connect.get()
 
-                    if (metaOgImage.size != 0) {
-                        activity.newsList[newsIdx].thumbnail = metaOgImage.attr("content")
-                    } else {
-                        activity.newsList[newsIdx].thumbnail = ""
-                    }
+                        val metaOgImage = document.select("meta[property=og:image]")
+                        val metaOgDesc = document.select("meta[property=og:description]")
 
-                    if (metaOgDesc.size != 0) {
-                        activity.newsList[newsIdx].desc = metaOgDesc.attr("content")
-
-                        // val symbols = Regex("[^\\uAC00-\\uD7A3xfe0-9a-zA-Z\\\\s]")
-                        val symbols = Regex("[^A-Za-z0-9ㄱ-힇]")      // 영어 소문자, 대문자, 숫자 0~9, 한글만 가져오도록 설정
-                        val contents: MutableList<String> = activity.newsList[newsIdx].desc.split(" ").toList().toMutableList()
-
-                        var idx = 0
-                        while (idx < contents.size) {
-                            val word = contents[idx].replace(symbols, "")       // 키워드의 특수문자 제거
-                            if (word.length < 2) {        // 길이가 2 이하인 단어 제거
-                                contents.removeAt(idx)
-                                idx -= 1
-                            } else {
-                                contents[idx] = word
-                            }
-                            idx += 1
+                        if (metaOgImage.size != 0) {
+                            activity.newsList[newsIdx].thumbnail = metaOgImage.attr("content")
+                        } else {
+                            activity.newsList[newsIdx].thumbnail = ""
                         }
 
-                        // 키워드 빈도수 검사
-                        val words = HashMap<String, Int>()
-                        idx = 0
-                        while (idx < contents.size) {
-                            if (words.containsKey(contents[idx])) {
-                                words.put(contents[idx], words[contents[idx]]!!.plus(1))
-                            } else {
-                                words.put(contents[idx], 1)
+                        if (metaOgDesc.size != 0) {
+                            activity.newsList[newsIdx].desc = metaOgDesc.attr("content")
+
+                            // val symbols = Regex("[^\\uAC00-\\uD7A3xfe0-9a-zA-Z\\\\s]")
+                            val symbols = Regex("[^A-Za-z0-9ㄱ-힇]")      // 영어 소문자, 대문자, 숫자 0~9, 한글만 가져오도록 설정
+                            val contents: MutableList<String> = activity.newsList[newsIdx].desc.split(" ").toList().toMutableList()
+
+                            var idx = 0
+                            while (idx < contents.size) {
+                                val word = contents[idx].replace(symbols, "")       // 키워드의 특수문자 제거
+                                if (word.length < 2) {        // 길이가 2 이하인 단어 제거
+                                    contents.removeAt(idx)
+                                    idx -= 1
+                                } else {
+                                    contents[idx] = word
+                                }
+                                idx += 1
                             }
-                            idx += 1
+
+                            // 키워드 빈도수 검사
+                            val words = HashMap<String, Int>()
+                            idx = 0
+                            while (idx < contents.size) {
+                                if (words.containsKey(contents[idx])) {
+                                    words.put(contents[idx], words[contents[idx]]!!.plus(1))
+                                } else {
+                                    words.put(contents[idx], 1)
+                                }
+                                idx += 1
+                            }
+
+                            // 키워드 정렬
+                            var keywords: List<Pair<String, Int>> = words.toList()
+                            keywords = keywords.sortedWith(compareByDescending<Pair<String, Int>> { it.second }.thenBy { it.first })        // 1. 빈도수 내림차순 정렬 2. 빈도수가 같을 경우 문자정렬 오름차순 적용
+
+                            activity.newsList[newsIdx].keyword[0] = keywords[0].first
+                            activity.newsList[newsIdx].keyword[1] = keywords[1].first
+                            activity.newsList[newsIdx].keyword[2] = keywords[2].first
+
+                        } else {
+                            activity.newsList[newsIdx].desc = "No Description"
+                            activity.newsList[newsIdx].keyword[0] = "keyword1"
+                            activity.newsList[newsIdx].keyword[1] = "keyword2"
+                            activity.newsList[newsIdx].keyword[2] = "keyword3"
                         }
-
-                        // 키워드 정렬
-                        var keywords: List<Pair<String, Int>> = words.toList()
-                        keywords = keywords.sortedWith(compareByDescending<Pair<String, Int>> { it.second }.thenBy { it.first })        // 1. 빈도수 내림차순 정렬 2. 빈도수가 같을 경우 문자정렬 오름차순 적용
-
-                        activity.newsList[newsIdx].keyword[0] = keywords[0].first
-                        activity.newsList[newsIdx].keyword[1] = keywords[1].first
-                        activity.newsList[newsIdx].keyword[2] = keywords[2].first
-
-                    } else {
-                        activity.newsList[newsIdx].desc = "No Description"
-                        activity.newsList[newsIdx].keyword[0] = "keyword1"
-                        activity.newsList[newsIdx].keyword[1] = "keyword2"
-                        activity.newsList[newsIdx].keyword[2] = "keyword3"
+                    } catch (e: NullPointerException) {
+                        e.printStackTrace()
+                    } catch (e: HttpStatusException) {
+                        e.printStackTrace()
+                    } catch (e: IOException) {
+                        e.printStackTrace()
                     }
                 }
             } catch (e: IOException) {
