@@ -172,8 +172,8 @@ class MainActivity : AppCompatActivity() {
                         .timeout(1000 * 10)      // 10 초 동안 웹 정보를 받아옴
                         .ignoreHttpErrors(true)
                         .header("Content-Type", "application/json;charset=UTF-8")       // bot 이 아닌 client 로 인식 하게 하기 위함
-                        .userAgent(USER_AGENT)                                                       //
-                        .ignoreContentType(true)                                    //
+                        .userAgent(USER_AGENT)                                                       // header, userAgent, ignoreContentType
+                        .ignoreContentType(true)                                    // 값 설정
                         .method(Connection.Method.GET)
                         .referrer("http://www.google.com")      // HTTP header field that identifies the address of the webpage
 
@@ -191,7 +191,6 @@ class MainActivity : AppCompatActivity() {
                     if (metaOgDesc.size != 0) {
                         activity.newsList[newsIdx].desc = metaOgDesc.attr("content")
 
-                        // val symbols = Regex("[^\\uAC00-\\uD7A3xfe0-9a-zA-Z\\\\s]")
                         val symbols = Regex("[^A-Za-z0-9ㄱ-힇]")      // 영어 소문자, 대문자, 숫자 0~9, 한글만 가져오도록 설정
                         val contents: MutableList<String> = activity.newsList[newsIdx].desc.split(" ").toList().toMutableList()
 
